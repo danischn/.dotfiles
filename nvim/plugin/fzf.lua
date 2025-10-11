@@ -36,26 +36,3 @@ require("fzf-lua").setup({
     previewer = false,
   }
 })
-
-local function new_tab()
-    local fzf = require"fzf-lua"
-    local opts = {}
-    opts.prompt = "Open item in new tab: "
-    opts.winopts = { height = 0.3, width = 0.6}
-    opts.actions = {
-        ['default'] = function(selected)
-            local item = vim.fn.getenv("HOME") .. "/" .. selected[1]
-            local dir = vim.fn.fnamemodify(item, ":p:h") .. "/"
-            if item == dir then
-              vim.cmd("$tabnew")
-            else
-              vim.cmd("$tabnew " .. item)
-            end
-            vim.cmd.tcd(dir)
-        end
-    }
-    fzf.fzf_exec("fd --hidden  --color=always --base-directory $HOME", opts)
-end
-
-vim.keymap.set("n", "<leader>t", new_tab)
-

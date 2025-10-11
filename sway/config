@@ -97,5 +97,6 @@ bar {
 }
 
 exec wl-paste --watch cliphist store
+exec_always systemctl --user start sway-session.target
 
 include /etc/sway/config.d/*

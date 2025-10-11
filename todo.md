@@ -26,7 +26,3 @@
 [ ] Git worktrees?
 [ ] Treesitter context
 [ ] Make a keybind for moving text up and down
-[ ] Make an verb for searching in vim
-    - sf = search function
-    - st = search type
-    - ....
