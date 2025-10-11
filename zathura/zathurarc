@@ -4,5 +4,4 @@ set font "JetBrainsMono Nerd Font Mono 13"
 set statusbar-bg "#ffffff"
 set statusbar-fg "#000000"
 set statusbar-home-tilde true
-map <Button8> navigate next
 map <Button9> navigate previous

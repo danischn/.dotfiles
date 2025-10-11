@@ -1,13 +1,13 @@
 {
     "layer": "top",
     "modules-center": ["sway/workspaces"],
-    "modules-right": ["network", "custom/screenshot", "bluetooth", "battery", "clock"],
+    "modules-right": ["custom/pomoschni", "pulseaudio", "network", "bluetooth", "battery", "clock"],
 
     "network": {
         "interface": "wlp2s0",
         "on-click": "nm-connection-editor",
-        "format-wifi": " ",
-        "format-disconnected": "󱛅 ", 
+        "format-wifi": "",
+        "format-disconnected": "󱛅", 
         "tooltip-format-wifi": "{essid}",
         "tooltip-format-ethernet": "{ifname}",
         "tooltip-format-disconnected": "Disconnected"
@@ -15,23 +15,38 @@
 
     "bluetooth": {
         "format": "",
-        "tooltip": false,
-        "on-click": "blueberry"
+        "on-click": "blueberry",
+        "tooltip-format": "Bluetooth"
     },
 
     "battery": {
-        "format": "{capacity}%",
-        "tooltip": false
+        "format": "{icon}",
+        "format-icons": {
+            "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        },
+        "tooltip-format": "{capacity}%",
+        "interval": 5
     },
 
     "clock": {
         "format": "{:%H.%M}",
         "tooltip": true,
-        "tooltip-format": "{:%d.%m \nWeek %g}"
+        "tooltip-format": "Date: {:%d %b \nWeek: %g}"
     },
 
-    "custom/screenshot": {
-        "format": " 󰄀 ", 
-        "on-click": "screenshot"
+    "pulseaudio": {
+        "format": "{icon}",
+        "on-click": "toggle-white-noice",
+        "tooltip-format": "Playing at {volume}%",
+        "scroll-step": 5,
+        "format-muted": "",
+        "format-icons": {
+            "default": ["", "", ""]
+        }
+    },
+
+    "custom/pomoschni": {
+        "format": "{}",
+        "exec": "/home/schnei/Projects/pomoschni/pomoschni.py"
     }
 }

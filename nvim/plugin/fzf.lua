@@ -6,7 +6,7 @@ require("fzf-lua").setup({
   winopts = {
     border = "single",
     preview = {
-      layout = "horizontal",
+      layout = "vertical",
       delay = 10,
     },
   },
@@ -58,3 +58,4 @@ local function new_tab()
 end
 
 vim.keymap.set("n", "<leader>t", new_tab)
+

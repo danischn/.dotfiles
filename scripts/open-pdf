@@ -1,3 +1,3 @@
 #!/bin/bash
 
-fd -e pdf --base-directory ~/Downloads | fuzzel --dmenu --width 50 | xargs -I {} xdg-open ~/Downloads/{}
+fd -e pdf --base-directory ~/Downloads | fuzzel --prompt "Open pdf: " --dmenu --width 70 | xargs -I {} xdg-open ~/Downloads/{}

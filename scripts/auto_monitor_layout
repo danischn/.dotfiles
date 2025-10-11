@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "Hello there" > /home/schnei/output
+notify-send "mothertrucker"

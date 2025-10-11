@@ -5,6 +5,7 @@ set $down j
 set $up k
 set $right l
 set $term alacritty
+floating_modifier $mod
 
 input * {
         xkb_layout us
@@ -42,10 +43,13 @@ client.unfocused         #333333  #222222     #888888  #292d2e    $clear
 # Application opener
 set $drun fuzzel
 bindsym $mod+Space exec $drun
+bindsym $mod+Return exec dmenu_misc
 
 bindsym $mod+p exec open-pdf
 bindsym $mod+g exec sway_toggle_gpt
 bindsym $mod+o exec sway_monitor_cycle
+bindsym $mod+Shift+p exec screenshot
+bindsym $mod+v exec clipboard_history
 
 # ----------------------------- Keybinds ------------------------------
 
@@ -78,6 +82,7 @@ assign [app_id="firefox"] workspace $wbrowser
 assign [app_id="org.pwmt.zathura"] workspace $wpdf
 for_window [app_id="nwg-displays"] floating enable
 for_window [app_id="yad"] floating enable
+for_window [app_id="imv"] floating enable
 for_window [app_id="zen"] move scratchpad
 
 bindsym $mod+Shift+a move container to workspace $wterm, workspace $wterm
@@ -91,11 +96,6 @@ bar {
   swaybar_command waybar
 }
 
-# OSD server
-exec swayosd-server
-bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
-bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower
-bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume 5 --max-volume 120
-bindsym XF86AudioLowerVolume exec swayosd-client --output-volume -5 --max-volume 120
+exec wl-paste --watch cliphist store
 
 include /etc/sway/config.d/*

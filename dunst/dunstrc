@@ -1,12 +1,13 @@
 [global]
 origin = top-right
 alignment = left
+width=(0,700)
 font = Monospace 18
 background = "#E6DED2"
 foreground = "#000000"
 frame_width = 1
 frame_color = "#000000"
-width = 300
+follow=mouse
 
 [urgency_low]
 timeout = 5

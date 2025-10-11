@@ -1,7 +1,7 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font";
+    font-family: "JetBrainsMono Nerd Font Propo";
     font-size: 15px;
     border-bottom: none;
     color: black;
@@ -15,9 +15,8 @@ window#waybar {
 tooltip {
   background: #FAF2EB;
   border: 1px solid black;
-}
-
-tooltip label {
+  padding: 2px;
+  text-shadow: none;
   color: black;
 }
 
@@ -30,7 +29,8 @@ tooltip label {
     border-bottom: 2px solid black;
 }
 
-#clock, #battery, #bluetooth, #network {
-    padding: 0 8px;
+
+#pulseaudio, #clock, #battery, #bluetooth, #network, #custom-pomoschni {
+    margin: 0 10px;
     background-color: transparent;
 }

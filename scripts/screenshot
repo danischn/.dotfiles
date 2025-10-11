@@ -13,4 +13,4 @@ fi
 sleep 0.1
 final="$(select_path)"
 mv "$tmpfile" "$final"
-notify-send "Screenshot" "Saved to ${final}"
+notify-send "Screenshot" "Saved to:\n${final}"

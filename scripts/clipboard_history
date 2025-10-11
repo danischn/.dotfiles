@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+item=$(cliphist list | fuzzel --prompt "History: " --dmenu --width 75 --with-nth 2 | cliphist decode | tee >(wl-copy))
+[[ -z "$item" ]] && exit
+wtype -M ctrl -M shift -P v -p v -m shift -m ctrl

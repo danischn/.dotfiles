@@ -2,12 +2,12 @@
 --- OPTIONS
 ---------------------------------------------------------------
 vim.cmd.colorscheme("iben")
-vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+vim.opt.clipboard = "unnamedplus"
 
 vim.opt.cmdheight = 0
 vim.opt.showmode = false
 vim.opt.laststatus = 2
-vim.opt.showtabline = 0 -- Dont know if i want to use tmux or neovim for this yet
+vim.opt.showtabline = 0 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
@@ -17,6 +17,7 @@ vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:ver25"
 
 vim.opt.pumheight = 4
 vim.opt.undofile = true
+vim.opt.splitkeep = "topline"
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -92,6 +93,7 @@ map("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 map("n", "<leader>h", "<cmd>FzfLua help_tags<cr>")
 map("n", "<leader>m", "<cmd>FzfLua manpages<cr>")
 map("n", "<leader>b", "<cmd>FzfLua buffers<cr>")
+map("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>")
 ---------------------------------------------------------------
 --- Autocmds
 ---------------------------------------------------------------
@@ -103,15 +105,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.api.nvim_create_autocmd('QuickFixCmdPost', {
-  group = vim.api.nvim_create_augroup("AutoOpenQF", {clear = true}),
-  pattern = {"*.c", "*.h"},
-	callback = function()
-		vim.cmd("vert copen")
-		local half_width = math.floor(vim.o.columns / 2)
-		vim.cmd("vertical resize " .. half_width)
-	end,
-})
 
 vim.api.nvim_create_autocmd({"BufWinEnter", "VimEnter", "WinEnter"}, {
   callback = function()
@@ -123,7 +116,7 @@ vim.api.nvim_create_autocmd({"BufWinEnter", "VimEnter", "WinEnter"}, {
 vim.api.nvim_create_autocmd("WinLeave", {
   callback = function()
     if vim.bo.filetype == "minifiles" then return end
-    vim.wo.winhl = ""
+       vim.wo.winhl = ""
   end
 })
 

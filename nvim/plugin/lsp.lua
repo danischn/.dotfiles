@@ -5,7 +5,7 @@ vim.keymap.set("n", "<leader>n", function()
 	vim.cmd.redrawstatus()
 end)
 
-vim.keymap.set("n", "<leader>p", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(_)

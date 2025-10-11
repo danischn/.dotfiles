@@ -34,45 +34,45 @@ shopt -s histappend
 export FZF_DEFAULT_OPTS="
   --color hl:#F27900,hl+:#F27900,fg+:-1,bg+:-1,border:#1A1918 
   --layout=reverse
-  --prompt='❯ '
+  --prompt='$ '
   --pointer='▶'
   --marker='│'
   --height=10
+  --ansi
+  --tmux
+  --style=minimal
+  --border=sharp
+  --info=inline-right
 "
 eval "$(fzf --bash)"
+export FZF_CTRL_T_COMMAND="fd --color=always"
+export FZF_CTRL_T_OPTS=""
 
 # ------------------ functions ------------------
 
 function ff(){
-  fd_options=(--follow --color=always --no-ignore-vcs)
-  exclude_dirs=(
-    Library
-    Music
-    Movies
-    Public
-    Desktop
-    Applications
-    Pictures
-  )
+  fd_cmd="fd --follow --color always"
+  selected=$($fd_cmd | fzf-tmux \
+  --bind "ctrl-d:reload($fd_cmd --type dir)" \
+  --bind "ctrl-h:reload($fd_cmd --hidden)" \
+  --bind "ctrl-o:reload($fd_cmd)" \
+  -p 50%,30% --ansi)
 
-  for dir in "${exclude_dirs[@]}"; do
-    fd_options+=( --exclude "$dir")
-  done
-
-  selected=$(fd "${fd_options[@]}" | fzf-tmux -p50%,30% --ansi)
-  if [ -z "$selected" ]; then return; fi
-
-  filetype=$(file --mime-type -b "$selected")
-
-  if [[ $filetype == "inode/directory" ]]; then
-      cd "$selected" || return
-  elif [[ $filetype == text/* || $filetype == application/* || $filetype == inode/x-empty ]]; then
-      cd "$(dirname "$selected")" || return
-      $EDITOR "$(basename "$selected")"
-  else
-      cd "$(dirname "$selected")" || return
-      xdg-open "$(basename "$selected")"
+  [[ ! -z "$selected" ]] || return
+  if [[ -d "$selected" ]]; then
+    cd "$selected"; return || return
+  else    
+    cd $(dirname "$selected") || return
   fi
+
+  file=$(basename "$selected")
+  filetype=$(file --mime-type -b "$file")
+
+  case $filetype in
+    text/* | application/* | inode/x-empty) $EDITOR "$file";;
+    *) xdg-open "$file";;
+  esac
+
 }
 bind '"\C-f":"\C-uff\n"'
 
@@ -94,11 +94,13 @@ alias c='clear'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -ir'
-alias b='cd - > /dev/null'
+alias b='cd - >/dev/null'
 alias tam='tmux attach -t main'
 alias tnm='tmux new -s main'
 alias week='date +%V'
 alias py='python'
+alias o='xdg-open'
+
 # ------------------- prompt -------------------
 
 PROMPT_DIRTRIM=3

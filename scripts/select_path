@@ -1,17 +1,36 @@
 #!/usr/bin/env bash
 
-choose_path() {
-    fd --type dir . "$HOME" \
+select_dir() {
+    dir=$(fd --type dir . "$HOME" \
         | sed "s|$HOME|~|" \
-        | fuzzel --dmenu --width 70 --placeholder="Save to:" --lines=3 --no-exit-on-keyboard-focus-loss --match-mode=exact\
-        | sed "s|~|$HOME|"
+        | fuzzel --dmenu --width 50 -p "Directory: " --lines=3 --no-exit-on-keyboard-focus-loss \
+        | sed "s|~|$HOME|")
+
+    if [ -d "$dir" ]; then
+        echo "$dir"
+        return
+    fi
+
+    notify-send "Invalid directory: '$dir'."
+    select_dir
 }
 
-path=$(choose_path)
+select_path() {
+    file=$(fuzzel --dmenu --width 50 --prompt-only "Save as: " --search="$1")
+    dir=$(dirname "$file")
 
-while [[ ! -f "$path"  || -z "${path##*.}" ]]; do
-    notify-send "Invalid path" "$path"
-    path=$(choose_path)
-done
+    if [[ ! -d "$dir" || "$dir" == "." ]]; then
+        notify-send "Invalid path $dir"
+        select_path $(select_dir)
+    elif [ -d $file ]; then
+        notify-send "Must specify a filename"
+        select_path $1
+    elif [ -f $file ]; then
+        notify-send "File $file already exists"
+        select_path $1
+    else
+        echo $file
+    fi
+}
 
-echo "$path"
+select_path $(select_dir)

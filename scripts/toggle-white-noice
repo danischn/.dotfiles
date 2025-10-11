@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+NOISE="$HOME/Music/white-noise.mp3"
+CMD="mpv --start=00:56 $NOISE"
+RUNNING=$(pgrep --full "$CMD")
+
+if [[ -z "$RUNNING" ]]; then
+    $CMD &
+else
+    pkill --full "$CMD"
+fi

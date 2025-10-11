@@ -1,0 +1,1 @@
+KERNEL=="card1-HDMI-A-1", ACTION=="change", RUN+="/home/schnei/dotfiles/scripts/auto_monitor_layout"
